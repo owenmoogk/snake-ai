@@ -25,6 +25,7 @@ font = pygame.font.SysFont("comicsans", 50)
 # game
 score = 0
 gridSize = 20
+gameSpeed = 7
 
 # sprites
 snakeSquares = []
@@ -38,15 +39,26 @@ class snake:
     def drawSquare(self):
         pygame.draw.rect(screen, green, (self.x,self.y,gridSize, gridSize))
 
-    def move(self, direction):
-        if direction == "left":
+    def death(self):
+        print("u died")
+
+    def move(self):
+        if self.direction == "left":
             self.x -= gridSize
-        if direction == "right":
+        elif self.direction == "right":
             self.x += gridSize
-        if direction == "up":
+        elif self.direction == "up":
             self.y -= gridSize
-        if direction == "down":
+        elif self.direction == "down":
             self.y += gridSize
+        
+        if self.y < 0 or self.y >= windowHeight:
+            self.death()
+        elif self.x < 0 or self.x >= windowWidth:
+            self.death()
+        
+    
+    def changeDirection(self, direction):
         self.direction = direction
 
 
@@ -61,6 +73,8 @@ snakeSquares.append(snake(5,5,"left"))
 
 while running:
 
+    clock.tick(gameSpeed)
+
     # running thru events
     events = pygame.event.get()
     for event in events:
@@ -70,13 +84,15 @@ while running:
         # if key is pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                snakeSquares[0].move("up")
+                snakeSquares[0].changeDirection("up")
             if event.key == pygame.K_DOWN:
-                snakeSquares[0].move("down")
+                snakeSquares[0].changeDirection("down")
             if event.key == pygame.K_LEFT:
-                snakeSquares[0].move("left")
+                snakeSquares[0].changeDirection("left")
             if event.key == pygame.K_RIGHT:
-                snakeSquares[0].move("right")
+                snakeSquares[0].changeDirection("right")
+        
+    snakeSquares[0].move()
     
     # background
     pygame.draw.rect(screen, black, (0,0,windowWidth, windowHeight))
