@@ -61,19 +61,24 @@ class snake:
     def changeDirection(self, direction):
         self.direction = direction
 
-
 class food:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = x * gridSize
+        self.y = y * gridSize
+    
+    def drawFood(self):
+        pygame.draw.rect(screen, red, (self.x,self.y, gridSize, gridSize))
+
+def showScore(score):
+    score_label = font.render("Score: " + str(score),1,(255,255,255))
+    screen.blit(score_label, (10, 10))
+
 
 running = True
 
-snakeSquares.append(snake(5,5,"left"))
+snakeSquares.append(snake(4,windowHeight/2/gridSize-1,"right"))
 
 while running:
-
-    clock.tick(gameSpeed)
 
     # running thru events
     events = pygame.event.get()
@@ -94,15 +99,14 @@ while running:
         
     snakeSquares[0].move()
     
-    # background
+    apple = food(10,10)
+
+    # drawing
     pygame.draw.rect(screen, black, (0,0,windowWidth, windowHeight))
-
-    # snake
     snakeSquares[0].drawSquare()
-
-    # score
-    score_label = font.render("Score: " + str(score),1,(255,255,255))
-    screen.blit(score_label, (10, 10))
+    apple.drawFood()
 
     # update display
+    showScore(score)
+    clock.tick(gameSpeed)
     pygame.display.update()
