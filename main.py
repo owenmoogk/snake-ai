@@ -5,8 +5,8 @@ from random import randint
 import pickle
 
 # config var
-windowWidth = 400
-windowHeight = 400
+windowWidth = 500
+windowHeight = 500
 clock = pygame.time.Clock()
 
 # display
