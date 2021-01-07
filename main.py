@@ -82,10 +82,10 @@ def showScore(score):
     score_label = font.render("Score: " + str(score),1,(255,255,255))
     screen.blit(score_label, (10, 10))
 
+snakeSquares.append(snake(4,windowHeight/2/gridSize-1,"right"))
 
 running = True
-
-snakeSquares.append(snake(4,windowHeight/2/gridSize-1,"right"))
+backlog = []
 
 while running:
 
@@ -95,17 +95,22 @@ while running:
         # if x button pressed stop just break out of these loops
         if event.type == pygame.QUIT:
             running = False
-        # if key is pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                snakeSquares[0].changeDirection("up")
-            if event.key == pygame.K_DOWN:
-                snakeSquares[0].changeDirection("down")
-            if event.key == pygame.K_LEFT:
-                snakeSquares[0].changeDirection("left")
-            if event.key == pygame.K_RIGHT:
-                snakeSquares[0].changeDirection("right")
-        
+                backlog.append("up")
+            elif event.key == pygame.K_DOWN:
+                backlog.append("down")
+            elif event.key == pygame.K_LEFT:
+                backlog.append("left")
+            elif event.key == pygame.K_RIGHT:
+                backlog.append("right")
+    
+    # if backlog has elements on it, then execute the first (every loop)
+    if len(backlog) > 0:
+        snakeSquares[0].changeDirection(backlog[0])
+        del(backlog[0])
+    print(backlog)
+
     snakeSquares[0].move()
     
     apple = food(10,10)
@@ -116,6 +121,6 @@ while running:
     apple.drawFood()
 
     # update display
-    showScore(score)
     clock.tick(gameSpeed)
+    showScore(score)
     pygame.display.update()
