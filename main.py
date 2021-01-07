@@ -59,7 +59,16 @@ class snake:
         
     
     def changeDirection(self, direction):
-        self.direction = direction
+        if self.direction == "up" and direction == "down":
+            return
+        elif self.direction == "down" and direction == "up":
+            return
+        elif self.direction == "left" and direction == "right":
+            return
+        elif self.direction == "right" and direction == "left":
+            return
+        else:
+            self.direction = direction
 
 class food:
     def __init__(self, x, y):
