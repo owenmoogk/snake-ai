@@ -6,8 +6,8 @@ import pickle
 import os
 
 # config var
-windowWidth = 500
-windowHeight = 500
+windowWidth = 1000
+windowHeight = 1000
 clock = pygame.time.Clock()
 
 # display
@@ -25,7 +25,7 @@ font = pygame.font.SysFont("comicsans", 50)
 
 # game
 score = 0
-gridSize = 20
+gridSize = 40
 gameSpeed = 7
 gridHeight = windowHeight / gridSize
 gridWidth = windowWidth / gridSize
