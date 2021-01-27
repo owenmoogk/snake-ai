@@ -31,7 +31,6 @@ gridHeight = windowHeight / gridSize
 gridWidth = windowWidth / gridSize
 snakeSquares = [] # keeps the snake square objects
 
-marli = pygame.transform.scale(pygame.image.load(os.path.join("assets","marli.png")), (gridSize, gridSize))
 
 class snake:
     def __init__(self, x, y, direction):
@@ -40,8 +39,8 @@ class snake:
         self.direction = direction
     
     def drawSquare(self):
-        # pygame.draw.rect(screen, green, (self.x,self.y,gridSize, gridSize))
-        screen.blit(marli, (self.x, self.y))
+        pygame.draw.rect(screen, green, (self.x,self.y,gridSize, gridSize))
+
     def move(self):
         if self.direction == "left":
             self.x -= gridSize
