@@ -6,8 +6,8 @@ import pickle
 import os
 
 # config var
-windowWidth = 1000
-windowHeight = 1000
+windowWidth = 800
+windowHeight = 800
 clock = pygame.time.Clock()
 
 # display
@@ -26,11 +26,10 @@ font = pygame.font.SysFont("comicsans", 50)
 # game
 score = 0
 gridSize = 40
-gameSpeed = 7
+gameSpeed = 100000
 gridHeight = windowHeight / gridSize
 gridWidth = windowWidth / gridSize
 snakeSquares = [] # keeps the snake square objects
-
 
 class snake:
     def __init__(self, x, y, direction):
@@ -99,6 +98,8 @@ while running:
     snakeSquares.append(snake(4,round(windowHeight/gridSize/2),"right"))
     length = 1 # keeps the length of the snake
 
+    step = "start"
+
     while playing:
         clock.tick(gameSpeed)
         pygame.draw.rect(screen, black, (0,0,windowWidth, windowHeight))
@@ -110,16 +111,30 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
                 playing = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    backlog.append("up")
-                elif event.key == pygame.K_DOWN:
-                    backlog.append("down")
-                elif event.key == pygame.K_LEFT:
-                    backlog.append("left")
-                elif event.key == pygame.K_RIGHT:
-                    backlog.append("right")
         
+        # hamiltonian cycle for 20x20
+        if step == "start":
+            if snakeSquares[0].x / gridSize == 19:
+                backlog.append('down')
+                step = "upAndDown"
+
+        elif step == "upAndDown":
+            if snakeSquares[0].x / gridSize == 19 and snakeSquares[0].y / gridSize == 19:
+                backlog.append("left")
+                step = "crossing"
+            elif snakeSquares[0].y / gridSize == 18 and snakeSquares[0].x / gridSize != 19 and snakeSquares[0].direction == "down":
+                backlog.append("right")
+                backlog.append("up")
+            elif snakeSquares[0].y / gridSize == 0 and snakeSquares[0].direction == "up":
+                backlog.append("right")
+                backlog.append("down")
+
+        elif step == "crossing":
+            if snakeSquares[0].x == 0:
+                backlog.append("up")
+                step = "upAndDown"
+
+
         # if backlog has elements on it, then execute the first (every loop)
         if len(backlog) > 0:
             snakeSquares[0].changeDirection(backlog[0])
@@ -128,12 +143,10 @@ while running:
         if len(snakeSquares) < length:
             snakeSquares.append(snake(0,0,"left")) # the left doesnt matter
 
-        # "moving" the body
+        # moving the snake
         for i in range(len(snakeSquares)-1,0,-1):
             snakeSquares[i].x = snakeSquares[i-1].x
             snakeSquares[i].y = snakeSquares[i-1].y
-        
-        # moving the head
         isDead = snakeSquares[0].move()
         if isDead:
             playing = False
