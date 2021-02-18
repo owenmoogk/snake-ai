@@ -39,7 +39,7 @@ class snake:
         self.direction = direction
     
     def drawSquare(self):
-        pygame.draw.rect(screen, green, (self.x,self.y,gridSize, gridSize))
+        pygame.draw.rect(screen, green, (self.x+1,self.y+1,gridSize-2, gridSize-2))
 
     def move(self):
         if self.direction == "left":
@@ -70,7 +70,7 @@ class food:
         self.spawnFood()
     
     def drawFood(self):
-        pygame.draw.rect(screen, red, (self.x,self.y, gridSize, gridSize))
+        pygame.draw.rect(screen, red, (self.x+1,self.y+1, gridSize-2, gridSize-2))
     
     def spawnFood(self):
         improper = True
