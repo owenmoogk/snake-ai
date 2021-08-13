@@ -1,9 +1,5 @@
-import pygame
-import sys
-import random
+import pygame, os
 from random import randint
-import pickle
-import os
 
 # config var
 windowWidth = 800
