@@ -6,6 +6,7 @@ from game import SnakeGameAI, Point, Direction
 from model import Linear_QNet, QTrainer
 from collections import deque
 from helper import plot
+import os
 
 maxMemory = 100_000
 batchSize = 1000
@@ -23,6 +24,11 @@ class Agent:
         self.memory = deque(maxlen=maxMemory)
         
         self.model = Linear_QNet(11, 256, 3)
+
+        if os.path.isfile('./model/model.pth'):
+            model_folder_path = './model/model.pth'
+            self.model.load_state_dict(torch.load(model_folder_path))
+        
         self.trainer = QTrainer(self.model, lr = learningRate, gamma=self.gamma)
 
     def getState(self, game):
@@ -74,10 +80,10 @@ class Agent:
             miniSample = self.memory
 
         states, actions, rewards, next_states, game_over = zip(*miniSample)
-        self.trainer.train_step(states, actions, rewards, next_states, game_over)
+        self.trainer.trainStep(states, actions, rewards, next_states, game_over)
 
     def trainShortMemory(self, state, action, reward, next_state, game_over):
-        self.trainer.train_step(state, action, reward, next_state, game_over)
+        self.trainer.trainStep(state, action, reward, next_state, game_over)
 
     def getAction(self, state):
         # exploitation / exploration
@@ -110,7 +116,7 @@ def train():
 
         move = agent.getAction(stateOld)
 
-        reward, game_over, score = game.play_step()
+        reward, game_over, score = game.play_step(move)
 
         stateNew = agent.getState(game)
 
