@@ -71,7 +71,7 @@ class SnakeGameAI:
                 quit()
         
         # 2. move
-        self.move() # update the head
+        self._move(action) # update the head
         self.snake.insert(0, self.head)
         
         # 3. check if game over
@@ -80,8 +80,8 @@ class SnakeGameAI:
         if self.is_collision() or self.gameTick > 100 * len(self.snake):
             game_over = True
             reward = -10
-            return reward, game_over, self.scorea
-            
+            return reward, game_over, self.score
+
         # 4. place new food or just move
         if self.head == self.food:
             self.score += 1
@@ -146,21 +146,5 @@ class SnakeGameAI:
             y += BLOCK_SIZE
         elif self.direction == Direction.UP:
             y -= BLOCK_SIZE
-            
-        self.head = Point(x, y)
-            
 
-if __name__ == '__main__':
-    game = SnakeGameAI()
-    
-    # game loop
-    while True:
-        game_over, score = game.play_step()
-        
-        if game_over == True:
-            break
-        
-    print('Final Score', score)
-        
-        
-    pygame.quit()
+        self.head = Point(x, y)
