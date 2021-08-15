@@ -60,7 +60,7 @@ class SnakeGameAI:
         if self.food in self.snake:
             self._place_food()
         
-    def play_step(self):
+    def play_step(self, action):
 
         self.gameTick += 1
 
@@ -71,7 +71,7 @@ class SnakeGameAI:
                 quit()
         
         # 2. move
-        self._move(action) # update the head
+        self.move(action) # update the head
         self.snake.insert(0, self.head)
         
         # 3. check if game over
