@@ -1,4 +1,8 @@
-import torch, torch.nn as nn, torch.optim as optim, torch.nn.functional as F, os
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import os
 
 class Linear_QNet(nn.Module):
 
@@ -52,9 +56,9 @@ class QTrainer:
             if not game_over[idx]:
                 Q_new = reward[idx] + self.gamma * torch.max(self.model(next_state[idx]))
 
-            target[idx][torch.argmax(action).item()] = Q_new
 
         # next, qNew = reward + gamma * max(next predicted q value)
+            target[idx][torch.argmax(action[idx]).item()] = Q_new
         self.optimizer.zero_grad()
         loss = self.criterion(target, prediction)
         loss.backward()
