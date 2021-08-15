@@ -1,0 +1,20 @@
+neural network is getting:
+    snake head position
+    snake square positions
+    direction
+    location of food
+
+action:
+    go straight
+    turn left
+    turn right
+
+(q is quality of action)
+
+steps:
+    init q value
+    Chose action (or random move, exploration vs exploitation)
+    Perform action
+    measure reward
+    update q value
+    back to step 2
