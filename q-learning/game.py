@@ -7,11 +7,6 @@ import numpy as np
 pygame.init()
 font = pygame.font.SysFont('arial', 25)
 
-# add a reward function
-# play function to take an action => direction
-# keep track of game-tick
-# is collision
-
 class Direction(Enum):
     RIGHT = 1
     LEFT = 2
