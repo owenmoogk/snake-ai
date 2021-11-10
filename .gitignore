@@ -1,3 +1,4 @@
 
 *.pyc
 q-learning/model/model.pth
+model/model.pth
