@@ -1,5 +1,6 @@
-import pygame, os
+import pygame
 from random import randint
+import math
 
 # config var
 windowWidth = 800
@@ -23,8 +24,8 @@ font = pygame.font.SysFont("comicsans", 50)
 score = 0
 gridSize = 40
 gameSpeed = 100000
-gridHeight = windowHeight / gridSize
-gridWidth = windowWidth / gridSize
+gridHeight = math.floor(windowHeight / gridSize)
+gridWidth = math.floor(windowWidth / gridSize)
 snakeSquares = [] # keeps the snake square objects
 
 class snake:

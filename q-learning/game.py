@@ -18,8 +18,7 @@ Point = namedtuple('Point', 'x, y')
 # rgb colors
 WHITE = (255, 255, 255)
 RED = (200,0,0)
-BLUE1 = (0, 0, 255)
-BLUE2 = (0, 100, 255)
+GREEN = (0,255,0)
 BLACK = (0,0,0)
 
 BLOCK_SIZE = 20
@@ -108,10 +107,9 @@ class SnakeGameAI:
         self.display.fill(BLACK)
         
         for pt in self.snake:
-            pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
-            pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
+            pygame.draw.rect(self.display, GREEN, pygame.Rect(pt.x + 1, pt.y + 1, BLOCK_SIZE-2, BLOCK_SIZE-2))
             
-        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
+        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x+1, self.food.y+1, BLOCK_SIZE-2, BLOCK_SIZE-2))
         
         text = font.render("Score: " + str(self.score), True, WHITE)
         self.display.blit(text, [0, 0])

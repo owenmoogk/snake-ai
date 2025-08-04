@@ -1,9 +1,8 @@
-from typing import final
 import torch
 import random
 import numpy as np
-from game import SnakeGameAI, Point, Direction
-from model import Linear_QNet, QTrainer
+from .game import SnakeGameAI, Point, Direction
+from .model import Linear_QNet, QTrainer
 from collections import deque
 from helper import plot
 import os
@@ -112,12 +111,19 @@ def train():
     game = SnakeGameAI()
 
     while True:
+
+        # time.sleep(1)
+
         stateOld = agent.getState(game)
 
         move = agent.getAction(stateOld)
 
+        # reward is 10 for each time that the snake eats something
+        # game over is true or false value
+        # score is the score of the game
         reward, game_over, score = game.play_step(move)
 
+        # state new is the state in which the game is in, the values are a 1d array
         stateNew = agent.getState(game)
 
         agent.trainShortMemory(stateOld, move, reward, stateNew, game_over)

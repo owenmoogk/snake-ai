@@ -1,13 +1,10 @@
 import pygame
-import sys
-import random
 from random import randint
-import pickle
-import os
+import math
 
 # config var
-windowWidth = 1000
-windowHeight = 1000
+windowWidth = 600
+windowHeight = 600
 clock = pygame.time.Clock()
 
 # display
@@ -25,14 +22,13 @@ font = pygame.font.SysFont("comicsans", 50)
 
 # game
 score = 0
-gridSize = 40
+gridSize = 30
 gameSpeed = 7
-gridHeight = windowHeight / gridSize
-gridWidth = windowWidth / gridSize
+gridHeight = math.floor(windowHeight / gridSize)
+gridWidth = math.floor(windowWidth / gridSize)
 snakeSquares = [] # keeps the snake square objects
 
-
-class snake:
+class Snake:
     def __init__(self, x, y, direction):
         self.x = x * gridSize
         self.y = y * gridSize
@@ -65,7 +61,7 @@ class snake:
         else:
             self.direction = direction
 
-class food:
+class Food:
     def __init__(self):
         self.spawnFood()
     
@@ -93,10 +89,10 @@ while running:
 
     playing = True
     backlog = []
-    apple = food()
+    apple = Food()
     apple.spawnFood()
     snakeSquares = [] # keeps the snake square objects
-    snakeSquares.append(snake(4,round(windowHeight/gridSize/2),"right"))
+    snakeSquares.append(Snake(4,round(windowHeight/gridSize/2),"right"))
     length = 1 # keeps the length of the snake
 
     while playing:
@@ -126,7 +122,7 @@ while running:
             del(backlog[0])
         
         if len(snakeSquares) < length:
-            snakeSquares.append(snake(0,0,"left")) # the left doesnt matter
+            snakeSquares.append(Snake(0,0,"left")) # the left doesnt matter
 
         # "moving" the body
         for i in range(len(snakeSquares)-1,0,-1):
